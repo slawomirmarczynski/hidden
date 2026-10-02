@@ -30,45 +30,42 @@ package hidden;
 import java.util.Objects;
 
 /**
- * Encrypts Latin letters using ROT13, rotating each letter by 13 positions.
+ * ROT13を使用し、ラテン文字をアルファベット上で13文字分ずらして暗号化します。
  *
- * <p>Uppercase and lowercase letters are handled separately to preserve their
- * case. Characters outside the ASCII letter ranges—including spaces,
- * punctuation, digits, and non-ASCII characters—are copied unchanged. ROT13
- * is symmetric: applying it twice returns the original text, so it can also
- * be used to reverse its own output. It is an encoding, not secure
- * cryptography.</p>
+ * <p>大文字と小文字は別々に処理し、元の大文字・小文字を保ちます。
+ * 空白、句読点、数字、ASCII範囲外の文字など、ASCII英字以外の文字は変更せずにコピーします。
+ * ROT13は対称であり、2回適用すると元のテキストに戻るため、暗号化結果の復号にも使えます。
+ * これは符号化方式であり、安全な暗号方式ではありません。</p>
  */
 public class Rot13Cipher extends Cipher {
     /**
-     * Applies ROT13 to each ASCII letter in the input.
+     * 入力内の各ASCII英字にROT13を適用します。
      *
-     * @param text text to transform; must not be {@code null}
-     * @return transformed text with non-ASCII letters and other characters
-     *         preserved
-     * @throws NullPointerException if {@code text} is {@code null}
+     * @param text 変換するテキスト。{@code null}は指定できません
+     * @return ASCII範囲外の英字やその他の文字を保持した変換後のテキスト
+     * @throws NullPointerException {@code text}が{@code null}の場合
      */
     @Override
     public String encrypt(String text) {
-        // Fail explicitly for invalid input instead of returning a misleading result.
+        // 不正な入力に対して誤解を招く結果を返さず、明示的に失敗させます。
         Objects.requireNonNull(text, "text");
 
-        // ROT13 preserves the number of UTF-16 code units, so this is a suitable initial capacity.
+        // ROT13ではUTF-16コード単位数が変わらないため、入力と同じ容量で初期化できます。
         StringBuilder encrypted = new StringBuilder(text.length());
-        // Transform each character independently; non-ASCII letters pass through unchanged.
+        // 文字を1つずつ変換します。ASCII範囲外の英字はそのまま通過します。
         for (char character : text.toCharArray()) {
-            // Convert an uppercase letter to a zero-based alphabet offset, rotate, then restore A's offset.
+            // 大文字をアルファベットの0始まりの位置に変換して回転し、'A'の位置を戻します。
             if (character >= 'A' && character <= 'Z') {
                 encrypted.append((char) ('A' + (character - 'A' + 13) % 26));
-            // Apply the same arithmetic to lowercase letters, preserving their case.
+            // 小文字にも同じ計算を適用し、小文字のまま保持します。
             } else if (character >= 'a' && character <= 'z') {
                 encrypted.append((char) ('a' + (character - 'a' + 13) % 26));
             } else {
-                // Keep spaces, punctuation, digits, and all other characters exactly as provided.
+                // 空白、句読点、数字など、その他の文字は入力されたまま保持します。
                 encrypted.append(character);
             }
         }
-        // Return a new string; the caller's original input has not been modified.
+        // 呼び出し元の入力を変更せず、新しい文字列を返します。
         return encrypted.toString();
     }
 }

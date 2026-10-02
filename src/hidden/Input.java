@@ -28,17 +28,17 @@
 package hidden;
 
 /**
- * Defines a source from which the program can read text.
+ * プログラムがテキストを読み込む入力元を定義します。
  *
- * <p>Implementations may read from a console, file, network connection, or
- * another source while exposing the same simple operation to the program.</p>
+ * <p>実装はコンソール、ファイル、ネットワーク接続などから読み込めます。
+ * どの入力元でも、プログラムには同じ読み込み操作を提供します。</p>
  */
 public abstract class Input {
     /**
-     * Reads and returns the next text value.
+     * 次のテキスト値を読み込んで返します。
      *
-     * @return the text read from this input source
+     * @return この入力元から読み込んだテキスト
      */
-    // The source-specific subclass defines where the next value comes from.
+    // 次の値をどこから取得するかは、入力元ごとのサブクラスが定義します。
     public abstract String read();
 }

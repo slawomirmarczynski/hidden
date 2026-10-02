@@ -30,21 +30,21 @@ package hidden;
 import java.util.Scanner;
 
 /**
- * Reads one line of text from the process's standard input.
+ * プロセスの標準入力から1行のテキストを読み込みます。
  *
- * <p>The scanner is intentionally not closed here because it wraps
- * {@link System#in}, a process-wide stream that the application does not own.</p>
+ * <p>このスキャナーは{@link System#in}をラップします。
+ * 標準入力はプロセス全体で共有され、アプリケーションが所有するものではないため、ここでは閉じません。</p>
  */
 public class ConsoleInput extends Input {
     /**
-     * Waits for and returns the next line entered on the console.
+     * コンソールに入力された次の行を待ち受けて返します。
      *
-     * @return the next line from standard input
+     * @return 標準入力から読み込んだ次の行
      */
     @Override
     public String read() {
-        // Wrap standard input for line-oriented reading; do not close it because
-        // System.in belongs to the process and may be needed elsewhere.
+        // 標準入力を使って行単位で読み込みます。System.inはプロセスが所有し、
+        // 他の場所でも必要になる可能性があるため、閉じないでください。
         return new Scanner(System.in).nextLine();
     }
 }

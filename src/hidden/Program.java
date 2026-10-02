@@ -28,42 +28,38 @@
 package hidden;
 
 /**
- * Connects the console input/output implementations with the ROT13 cipher.
+ * コンソール入出力の実装とROT13暗号を組み合わせます。
  *
- * <p>The program depends on the abstract {@link Input}, {@link Output}, and
- * {@link Cipher} types. The concrete implementations are selected here, so
- * alternative implementations can be introduced without changing the
- * processing sequence.</p>
+ * <p>このプログラムは抽象型の{@link Input}、{@link Output}、{@link Cipher}に依存します。
+ * 具体的な実装はここで選択するため、処理の流れを変えずに別の実装へ置き換えられます。</p>
  */
 public class Program implements Runnable {
     /**
-     * Reads one line, encrypts it, and writes the result.
+     * 1行を読み込み、暗号化して、結果を書き出します。
      *
-     * <p>Keeping these operations in sequence makes the data flow explicit:
-     * input text is passed to the cipher, and only the encrypted text is sent
-     * to the output.</p>
+     * <p>処理を順番に分けることでデータの流れを明確にします。
+     * 入力されたテキストを暗号器に渡し、暗号化されたテキストだけを出力します。</p>
      */
     @Override
     public void run() {
-        // Select the console adapters and the desired encryption algorithm.
+        // コンソール用の入出力と、使用する暗号アルゴリズムを選択します。
         Input input = new ConsoleInput();
         Output output = new ConsoleOutput();
         Cipher cipher = new Rot13Cipher();
 
-        // Keep each stage separate so another input, cipher, or output can be substituted.
+        // 各段階を分離し、入力元・暗号器・出力先を個別に差し替えられるようにします。
         String plain = input.read();
         String encrypted = cipher.encrypt(plain);
         output.write(encrypted);
     }
 
     /**
-     * Creates and runs the program.
+     * プログラムを生成して実行します。
      *
-     * <p>This entry point has package visibility to match the original
-     * application structure.</p>
+     * <p>元のアプリケーション構成に合わせ、このエントリーポイントはパッケージ可視です。</p>
      */
     static void main() {
-        // Start the application through the Runnable implementation.
+        // Runnableの実装を通じてアプリケーションを開始します。
         Program program = new Program();
         program.run();
     }

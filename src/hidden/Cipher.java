@@ -28,19 +28,18 @@
 package hidden;
 
 /**
- * Defines the operation provided by a text cipher.
+ * テキスト暗号が提供する操作を定義します。
  *
- * <p>Concrete subclasses choose and implement the encryption algorithm. Code
- * that uses a cipher can depend on this abstraction rather than a particular
- * algorithm.</p>
+ * <p>具象サブクラスが暗号化アルゴリズムを選択して実装します。
+ * 暗号器を利用するコードは、特定のアルゴリズムではなくこの抽象型に依存できます。</p>
  */
 public abstract class Cipher {
     /**
-     * Encrypts the supplied text.
+     * 指定されたテキストを暗号化します。
      *
-     * @param text text to encrypt
-     * @return the encrypted text
+     * @param text 暗号化するテキスト
+     * @return 暗号化されたテキスト
      */
-    // Each concrete cipher supplies its own algorithm while callers use this shared contract.
+    // 呼び出し側は共通の契約を利用し、各具象暗号器が独自のアルゴリズムを提供します。
     public abstract String encrypt(String text);
 }

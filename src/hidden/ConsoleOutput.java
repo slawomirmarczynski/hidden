@@ -28,17 +28,17 @@
 package hidden;
 
 /**
- * Writes text to the process's standard output, followed by a line break.
+ * テキストを改行とともにプロセスの標準出力へ書き込みます。
  */
 public class ConsoleOutput extends Output {
     /**
-     * Prints the supplied text to the console.
+     * 指定されたテキストをコンソールに表示します。
      *
-     * @param text text to print
+     * @param text 表示するテキスト
      */
     @Override
     public void write(String text) {
-        // println emits the text followed by the platform's line separator.
+        // printlnはテキストの後に、実行環境に対応した改行文字を出力します。
         System.out.println(text);
     }
 }

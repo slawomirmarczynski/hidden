@@ -28,17 +28,16 @@
 package hidden;
 
 /**
- * Defines a destination to which the program can send text.
+ * プログラムがテキストを送る出力先を定義します。
  *
- * <p>Implementations decide how and where the supplied value is presented or
- * stored.</p>
+ * <p>指定された値をどのように、どこへ表示または保存するかは実装が決定します。</p>
  */
 public abstract class Output {
     /**
-     * Writes the supplied text to this output destination.
+     * 指定されたテキストをこの出力先へ書き込みます。
      *
-     * @param text text to write
+     * @param text 書き込むテキスト
      */
-    // A concrete output decides how and where the text is delivered.
+    // テキストの送信方法と送信先は、具象出力クラスが決定します。
     public abstract void write(String text);
 }
